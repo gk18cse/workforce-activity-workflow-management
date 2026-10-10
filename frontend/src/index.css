@@ -2,35 +2,111 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Centralized SRATOME Font-Face Definition (Will load local assets if present, fallback gracefully to Orbitron) */
+@font-face {
+  font-family: 'SRATOME';
+  src: local('SRATOME'),
+       url('./assets/fonts/sratome.woff2') format('woff2'),
+       url('./assets/fonts/sratome.woff') format('woff'),
+       url('./assets/fonts/sratome.ttf') format('truetype');
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
+  /* Light Mode (Clean Monochrome Corporate) */
   :root {
-    --background: 224 71.4% 4.1%;
-    --foreground: 210 20% 98%;
-    --card: 224 71.4% 4.1%;
-    --card-foreground: 210 20% 98%;
-    --popover: 224 71.4% 4.1%;
-    --popover-foreground: 210 20% 98%;
-    --primary: 263.4 70% 50.4%;
-    --primary-foreground: 210 20% 98%;
-    --secondary: 215 27.9% 16.9%;
-    --secondary-foreground: 210 20% 98%;
-    --muted: 215 27.9% 16.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
-    --accent: 215 27.9% 16.9%;
-    --accent-foreground: 210 20% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 215 27.9% 16.9%;
-    --input: 215 27.9% 16.9%;
-    --ring: 263.4 70% 50.4%;
-    --radius: 0.5rem;
+    --background: #F5F5F5;      /* Off White */
+    --card: #FFFFFF;            /* Pure White */
+    --popover: #FFFFFF;
+    --primary: #2B2B2B;         /* Charcoal Black */
+    --primary-foreground: #FFFFFF;
+    --secondary: #EAEAEA;       /* Light Grey variant */
+    --secondary-foreground: #2B2B2B;
+    --muted: #EAEAEA;
+    --foreground: #2B2B2B;      /* Charcoal Black */
+    --muted-foreground: #666666; /* Medium Grey */
+    --border: #D9D9D9;         /* Light Grey */
+    --input: #D9D9D9;
+    --ring: #424242;
+    --radius: 0.375rem;
+  }
+
+  /* Dark Mode (Futuristic Monochrome Charcoal) */
+  .dark {
+    --background: #181818;
+    --card: #2B2B2B;            /* Charcoal Black */
+    --popover: #2B2B2B;
+    --primary: #424242;         /* Dark Grey */
+    --primary-foreground: #F5F5F5;
+    --secondary: #383838;       /* Dark Grey variant */
+    --secondary-foreground: #F5F5F5;
+    --muted: #383838;
+    --foreground: #F5F5F5;      /* Off White */
+    --muted-foreground: #999999; /* Light-Medium Grey */
+    --border: #424242;         /* Dark Grey */
+    --input: #424242;
+    --ring: #808080;
   }
 }
 
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #090d16;
-  color: #f8fafc;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Centralized SRATOME Typography Rules */
+.sratome-heading {
+  font-family: 'SRATOME', 'Orbitron', 'Inter', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sratome-stat {
+  font-family: 'SRATOME', 'Orbitron', 'Inter', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.sratome-nav {
+  font-family: 'SRATOME', 'Orbitron', 'Inter', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.sratome-btn {
+  font-family: 'SRATOME', 'Orbitron', 'Inter', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.sratome-label {
+  font-family: 'SRATOME', 'Orbitron', 'Inter', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+/* Custom sleek scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
 }

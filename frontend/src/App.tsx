@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeProvider';
 import { ToastProvider } from './components/ui/Toast';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { MainLayout } from './components/layout/MainLayout';
@@ -13,61 +14,63 @@ import { AuditLogPage } from './pages/AuditLogPage';
 export default function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <ToastProvider>
-          <Routes>
-            {/* Public Login Route */}
-            <Route path="/login" element={<LoginPage />} />
+      <ThemeProvider defaultTheme="dark">
+        <AuthProvider>
+          <ToastProvider>
+            <Routes>
+              {/* Public Login Route */}
+              <Route path="/login" element={<LoginPage />} />
 
-            {/* Protected Application Routes */}
-            <Route element={<ProtectedRoute />}>
-              <Route
-                path="/dashboard"
-                element={
-                  <MainLayout>
-                    <DashboardPage />
-                  </MainLayout>
-                }
-              />
-              <Route
-                path="/tasks"
-                element={
-                  <MainLayout>
-                    <TasksPage />
-                  </MainLayout>
-                }
-              />
-              <Route
-                path="/workflows"
-                element={
-                  <MainLayout>
-                    <WorkflowsPage />
-                  </MainLayout>
-                }
-              />
-              <Route
-                path="/issues"
-                element={
-                  <MainLayout>
-                    <IssuesPage />
-                  </MainLayout>
-                }
-              />
-              <Route
-                path="/audit-log"
-                element={
-                  <MainLayout>
-                    <AuditLogPage />
-                  </MainLayout>
-                }
-              />
-            </Route>
+              {/* Protected Application Routes */}
+              <Route element={<ProtectedRoute />}>
+                <Route
+                  path="/dashboard"
+                  element={
+                    <MainLayout>
+                      <DashboardPage />
+                    </MainLayout>
+                  }
+                />
+                <Route
+                  path="/tasks"
+                  element={
+                    <MainLayout>
+                      <TasksPage />
+                    </MainLayout>
+                  }
+                />
+                <Route
+                  path="/workflows"
+                  element={
+                    <MainLayout>
+                      <WorkflowsPage />
+                    </MainLayout>
+                  }
+                />
+                <Route
+                  path="/issues"
+                  element={
+                    <MainLayout>
+                      <IssuesPage />
+                    </MainLayout>
+                  }
+                />
+                <Route
+                  path="/audit-log"
+                  element={
+                    <MainLayout>
+                      <AuditLogPage />
+                    </MainLayout>
+                  }
+                />
+              </Route>
 
-            {/* Default Redirect */}
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
-          </Routes>
-        </ToastProvider>
-      </AuthProvider>
+              {/* Default Redirect */}
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            </Routes>
+          </ToastProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

@@ -3,12 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
-import { Badge } from '../components/ui/Badge';
-import { Shield, Key, Mail, ArrowRight, Activity } from 'lucide-react';
+import { Shield, Key, Mail, ArrowRight } from 'lucide-react';
 import { UserRole } from '../types';
 
 export const LoginPage: React.FC = () => {
-  const { login, switchDemoRole } = useAuth();
+  const { switchDemoRole } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('admin@acme.com');
@@ -34,31 +33,28 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center justify-center p-6 selection:bg-indigo-500 selection:text-white">
-      {/* Background glow effects */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-600/15 blur-[120px] rounded-full pointer-events-none" />
-
+    <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center p-6 selection:bg-primary selection:text-foreground transition-colors">
       <div className="w-full max-w-md space-y-6 relative z-10">
         {/* Brand Header */}
         <div className="text-center space-y-2">
-          <div className="inline-flex w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 items-center justify-center text-white shadow-xl shadow-indigo-600/30 font-black text-3xl mb-2">
+          <div className="inline-flex w-12 h-12 rounded-md bg-primary border border-border items-center justify-center text-primary-foreground font-sratome font-black text-2xl mb-1 shadow-xs">
             W
           </div>
-          <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-slate-100 via-indigo-200 to-purple-300 bg-clip-text text-transparent">
+          <h1 className="text-2xl sm:text-3xl font-sratome font-bold tracking-wider uppercase text-foreground">
             WorkflowPulse
           </h1>
-          <p className="text-sm text-slate-400">
-            Workforce Workflow & Operational Activity Management Platform
+          <p className="text-xs text-muted-foreground font-sans">
+            Workforce Activity & Workflow Management System
           </p>
         </div>
 
-        {/* Quick Role Switcher for instant testing */}
-        <Card className="border-indigo-500/30 bg-slate-900/90">
+        {/* Quick Role Switcher */}
+        <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-semibold flex items-center gap-1.5 text-indigo-400">
-              <Shield className="w-4 h-4" /> Instant Demo Role Selector
+            <CardTitle className="text-xs font-sratome font-bold flex items-center gap-1.5 text-muted-foreground uppercase tracking-wider">
+              <Shield className="w-3.5 h-3.5 text-primary" /> Instant Demo Persona Selector
             </CardTitle>
-            <CardDescription className="text-xs">
+            <CardDescription className="text-xs font-sans">
               Select a role below to preview role-specific dashboards & RBAC permissions:
             </CardDescription>
           </CardHeader>
@@ -69,10 +65,10 @@ export const LoginPage: React.FC = () => {
                   key={r}
                   type="button"
                   onClick={() => selectDemoRole(r)}
-                  className={`px-3 py-2 rounded-lg text-xs font-bold transition-all border ${
+                  className={`px-3 py-2 rounded-md font-sratome text-xs font-bold uppercase tracking-wider transition-all border ${
                     selectedRole === r
-                      ? 'bg-indigo-600 text-white border-indigo-400 shadow-md shadow-indigo-600/30'
-                      : 'bg-slate-950 text-slate-400 border-slate-800 hover:text-slate-200 hover:bg-slate-800'
+                      ? 'bg-primary text-primary-foreground border-border shadow-xs'
+                      : 'bg-background text-muted-foreground border-border hover:text-foreground hover:bg-secondary'
                   }`}
                 >
                   {r}
@@ -83,37 +79,37 @@ export const LoginPage: React.FC = () => {
         </Card>
 
         {/* Sign in Form */}
-        <Card className="border-slate-800">
+        <Card>
           <CardContent className="pt-6">
             <form onSubmit={handleLoginSubmit} className="space-y-4">
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                  <Mail className="w-3.5 h-3.5 text-slate-400" /> Work Email
+                <label className="font-sratome text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+                  <Mail className="w-3.5 h-3.5 text-muted-foreground" /> Work Email
                 </label>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+                  className="w-full bg-background border border-border rounded-md px-3.5 py-2 font-sratome text-xs text-foreground focus:outline-none focus:border-primary transition-colors"
                   required
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
-                  <Key className="w-3.5 h-3.5 text-slate-400" /> Password
+                <label className="font-sratome text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-1.5">
+                  <Key className="w-3.5 h-3.5 text-muted-foreground" /> Password
                 </label>
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg px-3.5 py-2 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+                  className="w-full bg-background border border-border rounded-md px-3.5 py-2 font-sratome text-xs text-foreground focus:outline-none focus:border-primary transition-colors"
                   required
                 />
               </div>
 
               <Button type="submit" variant="primary" className="w-full mt-2">
-                Sign In as {selectedRole} <ArrowRight className="w-4 h-4 ml-1" />
+                Sign In as {selectedRole} <ArrowRight className="w-3.5 h-3.5 ml-1" />
               </Button>
             </form>
           </CardContent>

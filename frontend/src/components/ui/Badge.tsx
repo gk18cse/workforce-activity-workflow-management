@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type BadgeVariant = 'indigo' | 'emerald' | 'amber' | 'rose' | 'slate' | 'sky' | 'purple';
+export type BadgeVariant = 'indigo' | 'emerald' | 'amber' | 'rose' | 'slate' | 'sky' | 'purple' | 'brand';
 
 interface BadgeProps {
   variant?: BadgeVariant;
@@ -8,20 +8,21 @@ interface BadgeProps {
   className?: string;
 }
 
-export const Badge: React.FC<BadgeProps> = ({ variant = 'indigo', children, className = '' }) => {
+export const Badge: React.FC<BadgeProps> = ({ variant = 'brand', children, className = '' }) => {
   const styles: Record<BadgeVariant, string> = {
-    indigo: 'bg-indigo-500/15 text-indigo-400 border-indigo-500/30',
-    emerald: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30',
-    amber: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
-    rose: 'bg-rose-500/15 text-rose-400 border-rose-500/30',
-    slate: 'bg-slate-500/15 text-slate-400 border-slate-500/30',
-    sky: 'bg-sky-500/15 text-sky-400 border-sky-500/30',
-    purple: 'bg-purple-500/15 text-purple-400 border-purple-500/30',
+    brand: 'bg-secondary text-foreground border-border',
+    indigo: 'bg-secondary text-foreground border-border',
+    emerald: 'bg-emerald-500/10 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-300 border-emerald-500/30',
+    amber: 'bg-amber-500/10 dark:bg-amber-950/60 text-amber-600 dark:text-amber-300 border-amber-500/30',
+    rose: 'bg-rose-500/10 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 border-rose-500/30',
+    slate: 'bg-muted text-muted-foreground border-border',
+    sky: 'bg-sky-500/10 dark:bg-sky-950/60 text-sky-600 dark:text-sky-300 border-sky-500/30',
+    purple: 'bg-purple-500/10 dark:bg-purple-950/60 text-purple-600 dark:text-purple-300 border-purple-500/30',
   };
 
   return (
     <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border backdrop-blur-xs ${styles[variant]} ${className}`}
+      className={`inline-flex items-center px-2 py-0.5 rounded-sm font-sratome text-[10px] font-bold tracking-wider uppercase border ${styles[variant]} ${className}`}
     >
       {children}
     </span>

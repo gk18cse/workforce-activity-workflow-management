@@ -8,8 +8,7 @@ import {
   AlertTriangle, 
   ShieldCheck, 
   MessageSquare,
-  Clock,
-  UserCheck
+  Clock
 } from 'lucide-react';
 
 interface ActivityTimelineProps {
@@ -19,7 +18,7 @@ interface ActivityTimelineProps {
 export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ logs }) => {
   if (!logs || logs.length === 0) {
     return (
-      <div className="py-8 text-center text-slate-500 text-sm">
+      <div className="py-8 text-center text-muted-foreground text-xs">
         No activity logs recorded yet for this task.
       </div>
     );
@@ -28,28 +27,28 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ logs }) => {
   const getActionIcon = (action: string) => {
     switch (action) {
       case 'TASK_CREATED':
-        return <GitCommit className="w-4 h-4 text-indigo-400" />;
+        return <GitCommit className="w-3.5 h-3.5 text-muted-foreground" />;
       case 'STAGE_TRANSITION':
-        return <ArrowRight className="w-4 h-4 text-blue-400" />;
+        return <ArrowRight className="w-3.5 h-3.5 text-foreground" />;
       case 'STATUS_CHANGE':
-        return <CheckCircle2 className="w-4 h-4 text-emerald-400" />;
+        return <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />;
       case 'ISSUE_REPORTED':
-        return <AlertTriangle className="w-4 h-4 text-rose-400" />;
+        return <AlertTriangle className="w-3.5 h-3.5 text-rose-500" />;
       case 'ISSUE_RESOLVED':
-        return <CheckCircle2 className="w-4 h-4 text-emerald-400" />;
+        return <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />;
       case 'APPROVAL_REQUESTED':
-        return <Clock className="w-4 h-4 text-amber-400" />;
+        return <Clock className="w-3.5 h-3.5 text-amber-500" />;
       case 'APPROVAL_ACTIONED':
-        return <ShieldCheck className="w-4 h-4 text-purple-400" />;
+        return <ShieldCheck className="w-3.5 h-3.5 text-purple-500" />;
       default:
-        return <MessageSquare className="w-4 h-4 text-slate-400" />;
+        return <MessageSquare className="w-3.5 h-3.5 text-muted-foreground" />;
     }
   };
 
-  const getActionBadgeVariant = (action: string): 'indigo' | 'emerald' | 'amber' | 'rose' | 'purple' | 'sky' => {
+  const getActionBadgeVariant = (action: string): 'brand' | 'emerald' | 'amber' | 'rose' | 'purple' | 'sky' => {
     switch (action) {
       case 'TASK_CREATED':
-        return 'indigo';
+        return 'brand';
       case 'STAGE_TRANSITION':
         return 'sky';
       case 'STATUS_CHANGE':
@@ -63,7 +62,7 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ logs }) => {
       case 'APPROVAL_ACTIONED':
         return 'purple';
       default:
-        return 'indigo';
+        return 'brand';
     }
   };
 
@@ -78,7 +77,7 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ logs }) => {
   };
 
   return (
-    <div className="space-y-6 relative before:absolute before:inset-0 before:left-4 before:w-0.5 before:bg-slate-800">
+    <div className="space-y-6 relative before:absolute before:inset-0 before:left-3.5 before:w-px before:bg-border">
       {logs.map((log) => {
         let prevObj: any = null;
         let newObj: any = null;
@@ -91,50 +90,50 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ logs }) => {
         }
 
         return (
-          <div key={log.id} className="relative pl-9 space-y-1">
-            {/* Circle Node Icon */}
-            <div className="absolute left-1.5 top-0.5 w-6 h-6 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center -translate-x-1/2 z-10">
+          <div key={log.id} className="relative pl-8 space-y-1.5">
+            {/* Minimal Node Dot */}
+            <div className="absolute left-1.5 top-0.5 w-5 h-5 rounded-full bg-card border border-border flex items-center justify-center -translate-x-1/2 z-10">
               {getActionIcon(log.action)}
             </div>
 
-            {/* Header: Actor & Action */}
+            {/* Header: Actor, Role, Action & Timestamp */}
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center space-x-2">
-                <span className="text-xs font-bold text-slate-200">
+                <span className="text-xs font-bold text-foreground">
                   {log.actor?.firstName} {log.actor?.lastName}
                 </span>
-                <Badge variant={log.actor?.roleEnum === 'ADMIN' ? 'indigo' : log.actor?.roleEnum === 'MANAGER' ? 'amber' : 'emerald'} className="text-[10px] px-1.5 py-0">
+                <Badge variant={log.actor?.roleEnum === 'ADMIN' ? 'brand' : log.actor?.roleEnum === 'MANAGER' ? 'amber' : 'emerald'} className="text-[9px] px-1.5 py-0">
                   {log.actor?.roleEnum}
                 </Badge>
                 <Badge variant={getActionBadgeVariant(log.action)} className="text-[10px]">
                   {log.action.replace('_', ' ')}
                 </Badge>
               </div>
-              <span className="text-[11px] text-slate-500 font-medium">
+              <span className="text-[11px] text-muted-foreground font-medium">
                 {formatTimestamp(log.createdAt)}
               </span>
             </div>
 
             {/* Remarks */}
             {log.remarks && (
-              <p className="text-xs text-slate-300 bg-slate-950/60 p-2.5 rounded-lg border border-slate-800/80 font-mono">
+              <p className="text-xs text-foreground bg-background p-2.5 rounded-lg border border-border font-mono">
                 {log.remarks}
               </p>
             )}
 
-            {/* State Diffs comparison if available */}
+            {/* Subtle State Diffs Box */}
             {(prevObj || newObj) && (
-              <div className="text-[11px] bg-slate-950/40 p-2 rounded border border-slate-800/50 space-y-1 text-slate-400">
+              <div className="text-[11px] bg-background/80 p-2.5 rounded-lg border border-border/60 space-y-1 text-muted-foreground font-mono">
                 {prevObj && (
                   <div className="flex items-center gap-2">
-                    <span className="text-slate-500 uppercase font-semibold text-[10px]">From:</span>
-                    <span className="text-rose-400/90">{typeof prevObj === 'object' ? JSON.stringify(prevObj) : prevObj}</span>
+                    <span className="text-muted-foreground uppercase font-semibold text-[9px]">Previous:</span>
+                    <span className="text-rose-500">{typeof prevObj === 'object' ? JSON.stringify(prevObj) : prevObj}</span>
                   </div>
                 )}
                 {newObj && (
                   <div className="flex items-center gap-2">
-                    <span className="text-slate-500 uppercase font-semibold text-[10px]">To:</span>
-                    <span className="text-emerald-400/90">{typeof newObj === 'object' ? JSON.stringify(newObj) : newObj}</span>
+                    <span className="text-muted-foreground uppercase font-semibold text-[9px]">Updated:</span>
+                    <span className="text-emerald-500">{typeof newObj === 'object' ? JSON.stringify(newObj) : newObj}</span>
                   </div>
                 )}
               </div>
