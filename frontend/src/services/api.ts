@@ -33,6 +33,21 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+// Response interceptor to handle 401 Unauthorized errors
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      // Clear token and user if an authorized session is expired or invalid
+      if (!error.config?.url?.includes('/auth/login')) {
+        localStorage.removeItem('wf_token');
+        localStorage.removeItem('wf_user');
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Auth API Services
 export const authApi = {
   login: async (email: string, password: string) => {

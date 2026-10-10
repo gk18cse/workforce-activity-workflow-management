@@ -1,18 +1,25 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   CheckSquare, 
   GitBranch, 
   AlertTriangle, 
   History, 
-  Users
+  Users,
+  LogOut
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { Badge } from '../ui/Badge';
 
 export const Sidebar: React.FC = () => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login', { replace: true });
+  };
 
   const navItems = [
     { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
@@ -88,11 +95,21 @@ export const Sidebar: React.FC = () => {
             <p className="text-[10px] text-muted-foreground truncate">{user?.email}</p>
           </div>
         </div>
-        <div className="mt-3 flex items-center justify-between text-xs">
-          <span className="text-[10px] font-sratome text-muted-foreground uppercase font-medium tracking-wider">Role:</span>
-          <Badge variant={user?.roleEnum ? roleColors[user.roleEnum] : 'brand'}>
-            {user?.roleEnum}
-          </Badge>
+        <div className="mt-3 pt-3 border-t border-border flex items-center justify-between text-xs">
+          <div className="flex items-center space-x-1.5">
+            <span className="text-[10px] font-sratome text-muted-foreground uppercase font-medium tracking-wider">Role:</span>
+            <Badge variant={user?.roleEnum ? roleColors[user.roleEnum] : 'brand'}>
+              {user?.roleEnum}
+            </Badge>
+          </div>
+          <button
+            onClick={handleLogout}
+            title="Sign Out"
+            className="flex items-center space-x-1 text-[10px] font-sratome uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors px-1.5 py-0.5 rounded hover:bg-secondary border border-transparent hover:border-border"
+          >
+            <LogOut className="w-3 h-3 text-muted-foreground hover:text-foreground" />
+            <span>Sign Out</span>
+          </button>
         </div>
       </div>
     </aside>

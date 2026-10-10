@@ -2,13 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Centralized SRATOME Font-Face Definition (Will load local assets if present, fallback gracefully to Orbitron) */
+/* Centralized SRATOME Font-Face Definition (Checks local installation, gracefully falls back to Orbitron) */
 @font-face {
   font-family: 'SRATOME';
   src: local('SRATOME'),
-       url('./assets/fonts/sratome.woff2') format('woff2'),
-       url('./assets/fonts/sratome.woff') format('woff'),
-       url('./assets/fonts/sratome.ttf') format('truetype');
+       local('SRATOME Regular'),
+       local('SRATOME-Regular');
   font-weight: 400 900;
   font-style: normal;
   font-display: swap;

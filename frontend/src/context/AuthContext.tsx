@@ -24,37 +24,41 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     if (savedToken && savedUser) {
       try {
-        setUser(JSON.parse(savedUser));
-        setToken(savedToken);
+        const parsedUser: User = JSON.parse(savedUser);
+        if (parsedUser && parsedUser.id) {
+          // Normalize roleEnum if backend returned role
+          parsedUser.roleEnum = (parsedUser.roleEnum || (parsedUser as any).role || 'EMPLOYEE') as UserRole;
+          setUser(parsedUser);
+          setToken(savedToken);
+        } else {
+          setUser(null);
+          setToken(null);
+          localStorage.removeItem('wf_token');
+          localStorage.removeItem('wf_user');
+        }
       } catch (e) {
         console.error('Failed to parse cached auth state:', e);
         localStorage.removeItem('wf_token');
         localStorage.removeItem('wf_user');
+        setUser(null);
+        setToken(null);
       }
     } else {
-      // Default to initial demo user if empty for instant dashboard preview
-      const demoUser: User = {
-        id: 'user-demo-admin',
-        email: 'admin@acme.com',
-        firstName: 'Sarah',
-        lastName: 'Connor (Admin)',
-        roleEnum: 'ADMIN',
-        organization: { id: 'org-acme', name: 'Acme Enterprises', slug: 'acme-corp' },
-        department: { id: 'dept-eng', name: 'Engineering & Product', code: 'ENG' },
-      };
-      setUser(demoUser);
-      setToken('demo-jwt-token-2026');
-      localStorage.setItem('wf_token', 'demo-jwt-token-2026');
-      localStorage.setItem('wf_user', JSON.stringify(demoUser));
+      setUser(null);
+      setToken(null);
     }
     setIsLoading(false);
   }, []);
 
   const login = (newToken: string, newUser: User) => {
+    const normalizedUser: User = {
+      ...newUser,
+      roleEnum: (newUser.roleEnum || (newUser as any).role || 'EMPLOYEE') as UserRole,
+    };
     setToken(newToken);
-    setUser(newUser);
+    setUser(normalizedUser);
     localStorage.setItem('wf_token', newToken);
-    localStorage.setItem('wf_user', JSON.stringify(newUser));
+    localStorage.setItem('wf_user', JSON.stringify(normalizedUser));
   };
 
   const logout = () => {

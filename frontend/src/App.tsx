@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeProvider';
 import { ToastProvider } from './components/ui/Toast';
 import { ProtectedRoute } from './components/ProtectedRoute';
@@ -11,6 +11,24 @@ import { WorkflowsPage } from './pages/WorkflowsPage';
 import { IssuesPage } from './pages/IssuesPage';
 import { AuditLogPage } from './pages/AuditLogPage';
 
+// Default entry point component: redirects authenticated users to /dashboard and unauthenticated users to /login
+function RootEntry() {
+  const { isAuthenticated, isLoading } = useAuth();
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background text-muted-foreground flex items-center justify-center">
+        <div className="flex items-center space-x-3">
+          <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          <span className="font-sratome text-xs uppercase tracking-wider text-muted-foreground">
+            Initializing...
+          </span>
+        </div>
+      </div>
+    );
+  }
+  return <Navigate to={isAuthenticated ? '/dashboard' : '/login'} replace />;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -18,10 +36,13 @@ export default function App() {
         <AuthProvider>
           <ToastProvider>
             <Routes>
-              {/* Public Login Route */}
+              {/* Default Entry Point: Login is default for guests, dashboard for active sessions */}
+              <Route path="/" element={<RootEntry />} />
+
+              {/* Public Login Route (automatically redirects to dashboard if already authenticated) */}
               <Route path="/login" element={<LoginPage />} />
 
-              {/* Protected Application Routes */}
+              {/* Protected Application Routes Wrapped within ProtectedRoute */}
               <Route element={<ProtectedRoute />}>
                 <Route
                   path="/dashboard"
@@ -65,8 +86,8 @@ export default function App() {
                 />
               </Route>
 
-              {/* Default Redirect */}
-              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+              {/* Default Fallback Redirect */}
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </ToastProvider>
         </AuthProvider>
