@@ -287,12 +287,17 @@ export const LoginPage: React.FC = () => {
           ========================================================================= */}
       <header className="relative z-20 w-full px-6 py-4 flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 rounded-lg bg-primary border border-border flex items-center justify-center text-primary-foreground font-sratome font-black text-sm shadow-xs">
+          <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center text-white font-bold text-sm shadow-md">
             W
           </div>
-          <span className="font-sratome font-extrabold text-xs tracking-wider uppercase text-foreground">
-            WorkflowPulse
-          </span>
+          <div>
+            <span className="font-sans font-bold text-sm tracking-tight text-foreground flex items-center gap-1.5">
+              WorkFlow <span className="text-primary font-extrabold text-[10px] px-1.5 py-0.5 rounded-md bg-primary/10 border border-primary/20">PRO</span>
+            </span>
+            <p className="text-[10px] text-muted-foreground font-medium hidden sm:block">
+              Workforce Activity & Workflow Management
+            </p>
+          </div>
         </div>
 
         <div className="flex items-center space-x-2">

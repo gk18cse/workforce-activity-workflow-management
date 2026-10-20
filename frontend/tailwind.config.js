@@ -8,8 +8,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sratome: ['SRATOME', 'Orbitron', 'Inter', 'sans-serif'],
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sratome: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
       },
       colors: {
         border: "var(--border)",
@@ -20,6 +20,7 @@ export default {
         primary: {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)",
+          hover: "#125656",
         },
         secondary: {
           DEFAULT: "var(--secondary)",
@@ -37,19 +38,30 @@ export default {
           DEFAULT: "var(--muted)",
           foreground: "var(--muted-foreground)",
         },
-        // Preserved Exact Monochrome Tokens
-        mono: {
-          charcoal: '#2B2B2B',
-          dark: '#424242',
-          medium: '#808080',
-          light: '#D9D9D9',
-          offwhite: '#F5F5F5',
-          pure: '#FFFFFF',
+        // WorkFlow Pro Brand Design Tokens
+        workflow: {
+          beige: '#F4EFE5',
+          ivory: '#F8F5EE',
+          teal: '#176B6B',
+          mutedTeal: '#438A87',
+          charcoal: '#292929',
+          warmGray: '#77736B',
+          borderBeige: '#DDD7CB',
+          success: '#2E7D5E',
+          warning: '#C88A2E',
+          terracotta: '#C25B4E',
         },
       },
-      letterSpacing: {
-        widest: '.15em',
-        futuristic: '.08em',
+      boxShadow: {
+        'neu-sm': '2px 2px 6px rgba(41, 41, 41, 0.04), -2px -2px 6px rgba(255, 255, 255, 0.7)',
+        'neu': '4px 4px 12px rgba(41, 41, 41, 0.05), -3px -3px 10px rgba(255, 255, 255, 0.85)',
+        'neu-raised': '6px 6px 16px rgba(41, 41, 41, 0.06), -4px -4px 12px rgba(255, 255, 255, 0.9)',
+        'neu-inset': 'inset 2px 2px 5px rgba(41, 41, 41, 0.04), inset -2px -2px 5px rgba(255, 255, 255, 0.7)',
+      },
+      borderRadius: {
+        'xl': '0.75rem',
+        '2xl': '1rem',
+        '3xl': '1.5rem',
       },
     },
   },

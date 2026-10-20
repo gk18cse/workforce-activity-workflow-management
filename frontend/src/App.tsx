@@ -7,7 +7,14 @@ import { MainLayout } from './components/layout/MainLayout';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { TasksPage } from './pages/TasksPage';
+import { WorkforcePage } from './pages/WorkforcePage';
+import { ActivityPage } from './pages/ActivityPage';
 import { WorkflowsPage } from './pages/WorkflowsPage';
+import { ProjectsPage } from './pages/ProjectsPage';
+import { CalendarPage } from './pages/CalendarPage';
+import { AnalyticsPage } from './pages/AnalyticsPage';
+import { NotificationsPage } from './pages/NotificationsPage';
+import { SettingsPage } from './pages/SettingsPage';
 import { IssuesPage } from './pages/IssuesPage';
 import { AuditLogPage } from './pages/AuditLogPage';
 
@@ -19,8 +26,8 @@ function RootEntry() {
       <div className="min-h-screen bg-background text-muted-foreground flex items-center justify-center">
         <div className="flex items-center space-x-3">
           <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-          <span className="font-sratome text-xs uppercase tracking-wider text-muted-foreground">
-            Initializing...
+          <span className="font-sans text-xs uppercase tracking-wider text-muted-foreground font-semibold">
+            Initializing WorkFlow Pro...
           </span>
         </div>
       </div>
@@ -32,7 +39,7 @@ function RootEntry() {
 export default function App() {
   return (
     <BrowserRouter>
-      <ThemeProvider defaultTheme="dark">
+      <ThemeProvider defaultTheme="light">
         <AuthProvider>
           <ToastProvider>
             <Routes>
@@ -61,10 +68,66 @@ export default function App() {
                   }
                 />
                 <Route
+                  path="/workforce"
+                  element={
+                    <MainLayout>
+                      <WorkforcePage />
+                    </MainLayout>
+                  }
+                />
+                <Route
+                  path="/activity"
+                  element={
+                    <MainLayout>
+                      <ActivityPage />
+                    </MainLayout>
+                  }
+                />
+                <Route
                   path="/workflows"
                   element={
                     <MainLayout>
                       <WorkflowsPage />
+                    </MainLayout>
+                  }
+                />
+                <Route
+                  path="/projects"
+                  element={
+                    <MainLayout>
+                      <ProjectsPage />
+                    </MainLayout>
+                  }
+                />
+                <Route
+                  path="/calendar"
+                  element={
+                    <MainLayout>
+                      <CalendarPage />
+                    </MainLayout>
+                  }
+                />
+                <Route
+                  path="/analytics"
+                  element={
+                    <MainLayout>
+                      <AnalyticsPage />
+                    </MainLayout>
+                  }
+                />
+                <Route
+                  path="/notifications"
+                  element={
+                    <MainLayout>
+                      <NotificationsPage />
+                    </MainLayout>
+                  }
+                />
+                <Route
+                  path="/settings"
+                  element={
+                    <MainLayout>
+                      <SettingsPage />
                     </MainLayout>
                   }
                 />
@@ -80,7 +143,7 @@ export default function App() {
                   path="/audit-log"
                   element={
                     <MainLayout>
-                      <AuditLogPage />
+                      <ActivityPage />
                     </MainLayout>
                   }
                 />

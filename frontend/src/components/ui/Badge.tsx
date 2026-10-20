@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type BadgeVariant = 'indigo' | 'emerald' | 'amber' | 'rose' | 'slate' | 'sky' | 'purple' | 'brand';
+export type BadgeVariant = 'brand' | 'teal' | 'success' | 'warning' | 'danger' | 'slate' | 'neutral' | 'emerald' | 'amber' | 'rose' | 'indigo' | 'sky' | 'purple';
 
 interface BadgeProps {
   variant?: BadgeVariant;
@@ -10,19 +10,24 @@ interface BadgeProps {
 
 export const Badge: React.FC<BadgeProps> = ({ variant = 'brand', children, className = '' }) => {
   const styles: Record<BadgeVariant, string> = {
-    brand: 'bg-secondary text-foreground border-border',
-    indigo: 'bg-secondary text-foreground border-border',
-    emerald: 'bg-emerald-500/10 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-300 border-emerald-500/30',
-    amber: 'bg-amber-500/10 dark:bg-amber-950/60 text-amber-600 dark:text-amber-300 border-amber-500/30',
-    rose: 'bg-rose-500/10 dark:bg-rose-950/60 text-rose-600 dark:text-rose-300 border-rose-500/30',
+    brand: 'bg-[#176B6B]/10 text-[#176B6B] border-[#176B6B]/30',
+    teal: 'bg-[#176B6B]/10 text-[#176B6B] border-[#176B6B]/30',
+    success: 'bg-[#2E7D5E]/15 text-[#2E7D5E] border-[#2E7D5E]/30',
+    emerald: 'bg-[#2E7D5E]/15 text-[#2E7D5E] border-[#2E7D5E]/30',
+    warning: 'bg-[#C88A2E]/15 text-[#C88A2E] border-[#C88A2E]/30',
+    amber: 'bg-[#C88A2E]/15 text-[#C88A2E] border-[#C88A2E]/30',
+    danger: 'bg-[#C25B4E]/15 text-[#C25B4E] border-[#C25B4E]/30',
+    rose: 'bg-[#C25B4E]/15 text-[#C25B4E] border-[#C25B4E]/30',
     slate: 'bg-muted text-muted-foreground border-border',
-    sky: 'bg-sky-500/10 dark:bg-sky-950/60 text-sky-600 dark:text-sky-300 border-sky-500/30',
-    purple: 'bg-purple-500/10 dark:bg-purple-950/60 text-purple-600 dark:text-purple-300 border-purple-500/30',
+    neutral: 'bg-secondary text-muted-foreground border-border/80',
+    indigo: 'bg-[#438A87]/15 text-[#176B6B] border-[#438A87]/30',
+    sky: 'bg-sky-500/10 text-sky-700 dark:text-sky-300 border-sky-400/30',
+    purple: 'bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-400/30',
   };
 
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded-sm font-sratome text-[10px] font-bold tracking-wider uppercase border ${styles[variant]} ${className}`}
+      className={`inline-flex items-center px-2.5 py-0.5 rounded-md font-sans text-[11px] font-semibold tracking-wide border ${styles[variant]} ${className}`}
     >
       {children}
     </span>
