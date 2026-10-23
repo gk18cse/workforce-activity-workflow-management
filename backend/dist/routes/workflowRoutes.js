@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const workflowController_1 = require("../controllers/workflowController");
+const authMiddleware_1 = require("../middlewares/authMiddleware");
+const client_1 = require("@prisma/client");
+const router = (0, express_1.Router)();
+router.use(authMiddleware_1.authenticateToken);
+router.get('/', workflowController_1.getWorkflows);
+router.get('/:id', workflowController_1.getWorkflowById);
+router.post('/', (0, authMiddleware_1.authorizeRoles)(client_1.UserRole.ADMIN, client_1.UserRole.MANAGER), workflowController_1.createWorkflow);
+router.put('/:id', (0, authMiddleware_1.authorizeRoles)(client_1.UserRole.ADMIN, client_1.UserRole.MANAGER), workflowController_1.updateWorkflow);
+router.delete('/:id', (0, authMiddleware_1.authorizeRoles)(client_1.UserRole.ADMIN), workflowController_1.deleteWorkflow);
+exports.default = router;
