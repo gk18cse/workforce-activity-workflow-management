@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { UserRole } from '../../types';
 import { ThemeToggle } from '../ui/ThemeToggle';
 import { 
   Search, 
@@ -23,9 +22,12 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onToggleMobile }) => {
-  const { user, logout, switchDemoRole } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const userRole = (user?.roleEnum || (user as any)?.role || 'EMPLOYEE') as string;
+  const formattedRole = userRole.charAt(0).toUpperCase() + userRole.slice(1).toLowerCase();
 
   const [showNotifications, setShowNotifications] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
@@ -135,25 +137,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobile }) => {
             )}
           </div>
 
-          {/* Role Switcher for demo */}
-          {switchDemoRole && (
-            <div className="hidden lg:flex items-center space-x-1 bg-background border border-border/80 p-1 rounded-xl shadow-neu-sm">
-              <span className="text-[10px] font-bold text-muted-foreground uppercase px-1.5 flex items-center gap-1">
-                <Shield className="w-3 h-3 text-primary" /> Role:
+          {/* Authenticated User Static Role Display */}
+          {user && (
+            <div className="hidden lg:flex items-center space-x-2 px-3 py-1.5 bg-background border border-border/80 rounded-xl shadow-neu-sm text-xs">
+              <Shield className="w-3.5 h-3.5 text-primary" />
+              <span className="font-semibold text-foreground">
+                {user.firstName} {user.lastName}
               </span>
-              {(['ADMIN', 'MANAGER', 'EMPLOYEE'] as UserRole[]).map((r) => (
-                <button
-                  key={r}
-                  onClick={() => switchDemoRole(r)}
-                  className={`px-2 py-0.5 text-[10px] font-bold rounded-lg transition-all ${
-                    user?.roleEnum === r
-                      ? 'bg-primary text-white shadow-sm'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-secondary'
-                  }`}
-                >
-                  {r}
-                </button>
-              ))}
+              <span className="text-muted-foreground font-medium">
+                ({formattedRole})
+              </span>
             </div>
           )}
 
@@ -255,7 +248,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobile }) => {
             <div className="space-y-4 py-4 text-xs text-muted-foreground">
               <div>
                 <h5 className="font-bold text-foreground text-sm mb-1">Operational Navigation</h5>
-                <p>Switch between Admin, Manager, and Employee personas using the Mode badge in the top bar to inspect role-based views.</p>
+                <p>Role and system permissions are strictly enforced based on your authenticated credentials.</p>
               </div>
               <div className="grid grid-cols-2 gap-3 bg-background p-3 rounded-2xl border border-border/60">
                 <div>
